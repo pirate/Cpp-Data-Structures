@@ -101,7 +101,7 @@ int human_move(square board[9], square human_symbol) {					// returns the move m
 	int final_move = -1;
 	final_move = place_move(board, move, human_symbol);
 	if (final_move == -1) {
-		cout << "\nPlacing an " << string(1, human_symbol) << " at " << move+1 << " is invalid.\n";
+		cout << "\nPlacing an " << string(1, human_symbol) << " at " << move+1 << " is invalid.\n";       // if spot is taken
         usleep(1000*500);
 		return human_move(board, human_symbol);
 	}
@@ -110,7 +110,7 @@ int human_move(square board[9], square human_symbol) {					// returns the move m
 
 /* AI Functions:
     Alpha-Beta Pruning algorithm (Minimax)
-    Big O worst case: O(|E|+|V|) -- depth-first
+    Big O worst case: O(|E|+|V|) -- type: depth-first
 */
 
 // dumb AI for gameplay demonstration and debugging when minimax_ai is broken
@@ -250,14 +250,14 @@ int main () {
 	while (check_for_winner(board) == -1) {
         recent_human_move = human_move(board, human_symbol);
         if (check_for_winner(board) != -1) break;
-        recent_computer_move = ai_move(board, computer_symbol);                        // change minimax_ai to fallback_ai to test game without minimax
+        recent_computer_move = ai_move(board, computer_symbol);
         if (check_for_winner(board) != -1) break;
         print_board(board, recent_human_move, recent_computer_move);
 	}
 
     // Endgame Text
     cout << endl;
-	print_board(board, -1, -1);                                                            // print ending state of the board with no recent moves highlighted
+	print_board(board, -1, -1);                                                 // print ending state of the board with no recent moves highlighted
 	string winner;
 	int end_result;
 	end_result = check_for_winner(board);                                       // its a tad innefficient to keep calling this every time, who cares, its only an extra 15ms
