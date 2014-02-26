@@ -22,7 +22,6 @@ int stoint(string input) {
 }
 
 string itostring(int i) {
-    std::string s;
     std::stringstream out;
     out << i;
     return out.str();
@@ -100,15 +99,34 @@ class FHeap {
             }
         }
 
+        void sortbychildren(int index) {
+            // recursive function that checks if(left or right < current) {swap left or right with current; then recurse with left or right}
+            int node = heap[index];
+            int left = (index*2)+1;
+            int right = (index+1)*2;
+            //cout << "parent: " << heap[parent] << " node: " << node;
+            if (node < heap[left] || node < heap[right]) {
+                if (heap[left] > heap[right]) {
+                    heap[index] = heap[left];
+                    heap[left] = node;
+                    sortbychildren(left);
+                }
+                else {
+                    heap[index] = heap[right];
+                    heap[right] = node;
+                    sortbychildren(right);
+                }
+            }
+        }
+
         string offset(int idx) {
             string spaces = "";
             int offset = int(floor(sqrt(heapsize-1)+0.5))-int(floor(sqrt(idx)+0.5));
             for (int i=0;i<offset;i++) {
                 spaces += "    ";
             }
-            if (!(offset)) {
+            if (!(offset))
                 spaces += " ";
-            }
             return spaces;
         }
 
@@ -122,10 +140,26 @@ class FHeap {
             sortbyparent(heapsize-1);
         }
 
-        void remove(int item) {
-            heap[heapsize] = item;
-            heapsize++;
-            sortbyparent(heapsize-1);
+        int pop() {
+            int root;
+            root = heap[0];
+            heap[0] = heap[heapsize-1];
+            heap[heapsize-1] = 0;
+            heapsize--;
+            sortbychildren(0);
+            return root;
+        }
+
+        void remove(int value) {
+            int idx = 0;
+            while (heap[idx] != value && idx < heapsize) idx++;
+            int node;
+            node = heap[idx];
+            heap[0] = heap[heapsize-1];  // swap node to remove and lower rightmost node
+            heap[heapsize-1] = 0;
+            heapsize--;
+            sortbyparent(idx);
+            sortbychildren(0);
         }
 
         string unsorted() {
@@ -138,12 +172,12 @@ class FHeap {
         }
 
         string sorted() {
-            string unsortedlist = "";
+            string sortedlist = "";
             for (int i=0;i<heapsize;i++) {
-                unsortedlist += itostring(heap[i]);
-                unsortedlist += ",";
+                sortedlist += itostring(heap[i]);
+                sortedlist += ",";
             }
-            return unsortedlist;
+            return sortedlist;
         }
 
         int size() {
@@ -181,11 +215,11 @@ int main () {
     for (int i=0; i<tokens.size(); i++)
         heap.add(tokens[i]);
 
-    cout << "[o] Heap diagram:" << endl;
+    cout << "[o] Heap Diagram:" << endl;
     heap.print();
-    cout << "[o] Unsorted heap:" << endl;
+    cout << "[o] Heap Array:" << endl;
     cout << heap.unsorted() << endl;
-    cout << "[o] Sorted heap:" << endl;
+    cout << "[o] Sorted Output:" << endl;
     cout << heap.sorted() << endl;
 
     string toremovefromheap;
