@@ -222,14 +222,12 @@ int main () {
     cout << "[o] Sorted Output:" << endl;
     cout << heap.sorted() << endl;
 
-    string toremovefromheap;
-    cout << "[i] Input numbers you would like removed from the heap, separated by commas semicolons or spaces: ";
-    cin >> toremovefromheap;
-    cin.clear();
+    int toremovefromheap;
+    cout << "[i] Input the number of nodes you'd like removed from the top of the heap:";
+    cin >> toremovefromheap; cin.clear();
 
-    tokens = tokenize(toremovefromheap);
-    for (int i=0; i<tokens.size(); i++)
-        heap.remove(tokens[i]);
+    for (int i=0; i<toremovefromheap; i++)
+        heap.pop();
 
     cout << "[o] Heap diagram:" << endl;
     heap.print();
