@@ -4,14 +4,13 @@
 */
 
 #include <stdlib.h>
-#include <ctype.h>      // isdigit
-#include <string>
+#include <ctype.h>      // isdigit (parsing for tokens/ops)
+#include <string>       // duh
 #include <vector>       // vector of tokenized input
 #include <iostream>     // cout
-#include <sstream>      // istringstream
-#include <math.h>       // pow
+#include <sstream>      // istringstream, setw
+#include <math.h>       // pow, sqrt
 using namespace std;
-
 
 const string delims = ",; ";
 
@@ -43,33 +42,6 @@ vector<int> tokenize(string input) {
 
     return tokens;
 }
-
-// Heap implemented with a binary tree
-template <class Type> class THeap {
-    // Binary Tree Nodes
-    private:
-    struct node {
-        Type value;
-        node *left;
-        node *right;
-
-        node(Type val=NULL, node *lefti=0, node *righti=0) {
-            value = val; left = lefti;  right = righti;
-        }
-    };
-
-    node *root;       // Fixed start of list
-    node *tail;       // Fixed end of list
-    node *conductor;  // points to each node while looping over the whole list
-
-    void resort() {
-
-    }
-
-    public:
-    THeap() {}
-    ~THeap() {};
-};
 
 // Heap implemented with a flat array and index math (implicit data structure)
 class FHeap {
@@ -134,6 +106,10 @@ class FHeap {
         FHeap() {heapsize=0;}
         ~FHeap() {};
 
+        int size() {
+            return heapsize;
+        }
+
         void add(int item) {
             heap[heapsize] = item;
             heapsize++;
@@ -150,6 +126,7 @@ class FHeap {
             return root;
         }
 
+        // TODO: allow removing of arbitrary nodes
         void remove(int value) {
             int idx = 0;
             while (heap[idx] != value && idx < heapsize) idx++;
@@ -173,30 +150,28 @@ class FHeap {
 
         string sorted() {
             string sortedlist = "";
-            for (int i=0;i<heapsize;i++) {
-                sortedlist += itostring(heap[i]);
+            int size = heapsize;
+            for (int i=0;i<size;i++) {
+                sortedlist += itostring(pop());
                 sortedlist += ",";
             }
             return sortedlist;
         }
 
-        int size() {
-            return heapsize;
-        }
-
         void print() {
             int idx = 0;
             // for each level in the tree
+            cout << "\033[1;31m";
             for (int l=1;l<heapsize+1;l=l*2) {
                 // print the nodes on that level
                 for (int i=0;i<l;i++) {
-                    if (idx < heapsize) {
-                        cout << offset(idx) << "(" << heap[idx] << ")";
-                    }
+                    if (idx < heapsize)
+                        cout << "(" << heap[idx] << ")";
                     idx++;
                 }
                 cout << endl;
             }
+            cout << "\033[0m";
         }
 };
 
@@ -206,21 +181,15 @@ int main () {
 
     string toaddtoheap;
     cout << "[i] Input numbers you would like added to the heap, separated by commas semicolons or spaces: ";
-    cin >> toaddtoheap;
-    cin.clear();
+    cin >> toaddtoheap; cin.clear();
 
     vector<int> tokens = tokenize(toaddtoheap);
-    if (tokens.size() == 0)
-        return 1;
+    if (tokens.size() == 0) return 1;
     for (int i=0; i<tokens.size(); i++)
         heap.add(tokens[i]);
 
     cout << "[o] Heap Diagram:" << endl;
     heap.print();
-    cout << "[o] Heap Array:" << endl;
-    cout << heap.unsorted() << endl;
-    cout << "[o] Sorted Output:" << endl;
-    cout << heap.sorted() << endl;
 
     int toremovefromheap;
     cout << "[i] Input the number of nodes you'd like removed from the top of the heap:";
@@ -234,5 +203,5 @@ int main () {
     cout << "[o] Unsorted heap:" << endl;
     cout << heap.unsorted() << endl;
     cout << "[o] Sorted heap:" << endl;
-    cout << heap.sorted() << endl;
+    cout << "\033[1;33m" << heap.sorted() << "\033[0m" << endl;
 }
