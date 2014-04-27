@@ -1,4 +1,6 @@
 #include <stdio.h>
+#simdi
+#64 bit register scheme
 
 int output_a, output_b, input_a, input_b;
 
