@@ -59,3 +59,13 @@ int main(void) {
 
     return 0;
 }
+
+
+
+
+
+/*
+
+balancing the stacjk = pushing and popping in reverse the proper number of pointers
+
+*/
