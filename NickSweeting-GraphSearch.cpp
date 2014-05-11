@@ -4,7 +4,8 @@
 */
 
 #include <stdlib.h>
-#include <string>
+#include <time.h>       // rand seed
+#include <string>       // duh
 #include <vector>       // vector of tokenized input
 #include <queue>        // breadth-first search
 #include <iostream>     // cout
@@ -12,7 +13,7 @@
 #include <map>          // map
 using namespace std;
 
-const string alphabet[26] = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
+const string alphabet[26] = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};    // for generating random graph vertex labels
 
 vector<string> tokenize(string input, string delims=",; -") {
     vector<string> tokens;
@@ -33,7 +34,7 @@ vector<string> tokenize(string input, string delims=",; -") {
 
 class Graph {
     private:
-        typedef map<string, int*> list;             // grid rows
+        typedef map<string, int*> list;             // grid row
         typedef map<string, list> matrix;           // grid columns
         typedef list::iterator listiter;            // grid row iterator (used to iterate over a map in a for loop) iter->first is key and iter->second is value
         typedef matrix::iterator matrixiter;        // grid column iterator (used to iterate over a map in a for loop)
@@ -74,7 +75,7 @@ class Graph {
     public:
         Graph(int size=0) {
             // init a default graph with up to 26 verticies labeled A through Z
-            for (int i=0; i < size && i < 26; i++)
+            for (int i=0; i < size && i < 27; i++)
                 addVertex(alphabet[i]);
         }
         ~Graph() {
@@ -199,8 +200,11 @@ class Graph {
 };
 
 int main() {
+    // init random number seed from time
+    srand(time(NULL));
+    // init graph
     Graph *graph = new Graph();
-    cout << "Will generate and map a graph. Points can be labeled and referenced using strings.\n[1] add verticies\n[2] remove verticies\n[3] add edges\n[4] remove edges\n[5] breadth-first shortest path\n[6] dijkstra's shortest path\n---\n[7] load demo graph\n[8] read file\n[0] quit\n\n";
+    cout << "Will generate and map a graph. Points can be labeled and referenced using strings.\n[1] add verticies\n[2] remove verticies\n[3] add edges\n[4] remove edges\n[5] breadth-first shortest path\n[6] dijkstra's shortest path\n---\n[7] generate demo graph\n[8] read graph from file\n[0] quit\n\n";
     int n;
     while (1) {
         graph->printAdjTable();
@@ -252,7 +256,7 @@ int main() {
             if (tokens.size() == 2)
                 graph->breadthFirst(tokens[0], tokens[1]);
             else
-                cout << "\033[1;31m[X] You can only find the path between two verticies." << endl;
+                cout << "\033[1;31m[X] You can only find the path between two verticies.\033[0m" << endl;
         }
         else if (n == 6) {
             // fake dijkstra's seach (it just uses breadth-first)
@@ -273,7 +277,7 @@ int main() {
             if (verticies < 27 && verticies > 0)
                 *graph = Graph(verticies);
             else if (verticies > 27)
-                cout << "\033[1;31m[X] Demo graph has a max of 26 vertices (because it uses the alphabet as labels)" << endl;
+                cout << "\033[1;31m[X] Demo graph has a max of 26 vertices (because it uses the alphabet as labels)\033[0m" << endl;
             else
                 continue; // do not remove, bad things will happen
 
@@ -301,9 +305,9 @@ int main() {
             char* block = new char[65536]; // max file size
             raw_buffer->sgetn(block, 65536);
             string intext = "";
-            int i=0;
 
             // read in verticies "A,B,C,D,E,F,G"
+            int i=0;
             for (; i<65536; i++) {
                 if (block[i] == '\n')
                     break;
@@ -313,7 +317,7 @@ int main() {
             // add verticies
             vector<string> tokens = tokenize(intext);
             if (tokens.empty())
-                cout << "\033[1;31m[X] No properly formatted verticies found (vertex1,vertex2,vertex3,...)\033[0m" << endl;
+                cout << "\033[1;31m[X] No properly formatted verticies found (A,B,C,...)\033[0m" << endl;
             else {
                 for (int i=0; i<tokens.size(); i++)
                     graph->addVertex(tokens[i]);
@@ -330,7 +334,7 @@ int main() {
             // add edges
             vector<string> links = tokenize(intext, ",");
             if (links.empty())
-                cout << "\033[1;31m[X] No properly formatted edges found (vertex1-vertex2,vertex2-vertex3,...)\033[0m" << endl;
+                cout << "\033[1;31m[X] No properly formatted edges found (A-B,A-C,C-B,...)\033[0m" << endl;
             else {
                 for (int i=0; i<links.size(); i++) {
                     vector<string> link = tokenize(links[i], "-");
@@ -343,10 +347,9 @@ int main() {
 
             delete[] block;
         }
-        else if (n == 0) {
+        else if (n == 0)
             break; // quit
-        }
         else
             cout << "\033[1;31m[X] Enter the number of the command you're trying to run.\033[0m" << endl;
-        }
+    }
 }
