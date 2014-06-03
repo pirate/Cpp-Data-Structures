@@ -13,6 +13,8 @@
 #include <map>          // map
 using namespace std;
 
+typedef int(5) int;
+
 const string alphabet[26] = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};    // for generating random graph vertex labels
 
 vector<string> tokenize(string input, string delims=",; -") {
