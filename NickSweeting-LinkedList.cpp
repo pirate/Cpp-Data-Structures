@@ -182,7 +182,7 @@ template <class Type> class LList {
         // remove item at given positive index
         else if (location > 0 && location < list_size) {
         	int index = 0;
-            conductor = root; // The conductor starts at tail and loops forward following the chain of nexts
+            conductor = root; // The conductor starts at head and loops forward following the chain of nexts
             while (index < list_size) {
             	if (index+1 == location) {
             		if (index+2 < list_size) conductor->next->next->prev = conductor;
