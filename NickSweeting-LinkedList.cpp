@@ -31,6 +31,7 @@ template <class Type> class LList {
     ~LList() {};
 
     Type& operator[](const int location) throw (const char *) {
+        // negative indecies work like they do in python
         // [  0,  1,  2,  3,  4,  5,  6,  7,  8,  9] ==
         // [-10, -9, -8, -7, -6, -5, -4, -3, -2, -1]
         if (location > list_size-1 || location < 0-list_size) throw "Invalid array access, index > array_size";
@@ -153,6 +154,8 @@ template <class Type> class LList {
     }
 
     void add(Type item) {
+        // add appends to the end of the list by default
+        // to add to the head, do add(0, item)
         add(-1, item);
     }
 
@@ -182,7 +185,7 @@ template <class Type> class LList {
         // remove item at given positive index
         else if (location > 0 && location < list_size) {
         	int index = 0;
-            conductor = root; // The conductor starts at head and loops forward following the chain of nexts
+            conductor = root; // The conductor starts at head and loops forward following node->next
             while (index < list_size) {
             	if (index+1 == location) {
             		if (index+2 < list_size) conductor->next->next->prev = conductor;
@@ -200,7 +203,7 @@ template <class Type> class LList {
         // remove item at given negative index
         else if (location < 0 && location > -1-list_size) {
         	int index = -1;
-        	conductor = tail; // The conductor starts at tail and loops back following the chain of prevs
+        	conductor = tail; // The conductor starts at tail and loops back following node->prev
             while (index > -1-list_size) {
             	if (index-1 == location) {
             		if (index-1 > 0-list_size) conductor->prev->prev->next = conductor;
@@ -220,7 +223,7 @@ template <class Type> class LList {
 
     int find(Type item) {
     	int index = 0;
-        conductor = root; // The conductor points to the first node
+        conductor = root; // start at head and loop through node->next towards tail
         while (conductor != 0) {
         	if (conductor->value == item) return index;
             conductor = conductor->next;
@@ -231,7 +234,7 @@ template <class Type> class LList {
 
     int reverse_find(Type item) {
     	int index = -1;
-        conductor = tail; // The conductor points to the first node
+        conductor = tail; // start at tail and loop through node->prev towards head
         while (conductor != 0) {
         	if (conductor->value == item) return index;
             conductor = conductor->prev;
