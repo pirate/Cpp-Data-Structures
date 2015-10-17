@@ -20,7 +20,10 @@ freaking ridiculous if the whole assignment is <300 lines.  F the system, put it
 and you save everybody time.
 
 ---------------------------------------------------------
-These assignments were compiled and tested on a mac:  
+These assignments were compiled and tested using:  
 `Apple LLVM version 7.0.0 (clang-700.0.72)`  
 `Target: x86_64-apple-darwin15.0.0`
 
+If you choose to copy this code to cheat on your homework, do so at your own peril, and don't be a dumbass and forget to change the variable & function names :).
+
+MIT License - Nick Sweeting - 2015
