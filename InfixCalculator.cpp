@@ -1,10 +1,13 @@
 /*  Nick Sweeting 2014/02/03
     Infix Translator
     MIT License
+    g++ InfixCalculator.cpp -o main; and ./main
+
+    A calculator that takes input in infix format, and prints the output in postfix or prefix notation.
 */
 
-// #include ".//.//.//.//infix.cpp"                                     // uncomment this, I dare you
-// #include "infix.cpp"
+// #include ".//.//.//.//InfixCalculator.cpp"         // uncomment this, I dare you
+// #include "InfixCalculator.cpp"
 #include <stdlib.h>
 #include <ctype.h>      // isdigit
 #include <string>

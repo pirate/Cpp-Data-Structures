@@ -1,6 +1,7 @@
 /*  Nick Sweeting 2013/09/09
-    Palindrome detector C++ (non OOP)
-    MIT Liscense
+    Palindrome Detector C++
+    MIT License
+    g++ Palindrome.cpp -o main; and ./main
 
     Takes input and removes puctuation and spaces, then checks to see if it's a palindrome or not.
 */

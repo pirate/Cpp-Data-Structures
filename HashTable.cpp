@@ -1,6 +1,10 @@
 /*  Nick Sweeting 2014/05/12
     Hash Map
     MIT License
+    g++ HashTable.cpp -o main; and ./main
+
+    A Hash-Table implementation that is used to store a list of students and their GPAs.
+    TODO: fix SIGSEGV
 */
 
 #include <stdlib.h>
@@ -74,7 +78,7 @@ public:
     };
 
     Student* operator[](const int key) throw (const char *) {
-        if (hashtable[hash(key)]->firstName)
+        if (*(hashtable[hash(key)]->firstName))
             return hashtable[hash(key)];
         else
             return NULL;
@@ -92,7 +96,7 @@ public:
 
     void clear() {
         for (int i=0; i<magic;i++) {
-            if (hashtable[i]->firstName)
+            if (*(hashtable[i]->firstName))
                 remove(i);
         }
         if (count != 0)
@@ -109,7 +113,7 @@ public:
 
     void print() {
         for (int i=0; i<magic;i++) {
-            if ((*hashtable[i]).firstName)
+            if (*(hashtable[i]->firstName))
                 cout << i << ": " << (*hashtable[i]).firstName << " " << (*hashtable[i]).lastName << " - " << (*hashtable[i]).GPA << endl;
         }   
     }

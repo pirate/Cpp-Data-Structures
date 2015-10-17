@@ -1,6 +1,9 @@
 /* 	Nick Sweeting 2013/09/09
 	Tic Tac Toe in C++ (non OOP)
-	MIT Liscense
+	MIT License
+    g++ TicTacToe.cpp -o main && ./main
+
+    An even buggier fork of my TicTacToe implementation, TODO: get it working.
 */
 
 #include <stdlib.h>

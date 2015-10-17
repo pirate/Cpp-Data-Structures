@@ -1,3 +1,12 @@
+/*  Nick Sweeting 2014/12
+    ReversibleStack
+    MIT License
+    g++ ReversibleStack.cpp -o main; and ./main inputfile.txt
+
+    A reversible stack implemenation that reads commands 'push,pop,reverse,display' out of a file to build the stack.
+*/
+
+
 #include <cstddef> // needed to use NULL
 #include <stdlib.h>
 #include <iostream>

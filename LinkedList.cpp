@@ -1,6 +1,8 @@
 /*  Nick Sweeting 2013/10/08
     Student List (OOP)
     MIT Licence
+
+    A Linked List implemenation that is used to store a list of students.
 */
 
 #include <stdlib.h>
@@ -9,10 +11,9 @@
 #include <cmath>
 using namespace std;
 
-
+// Linked List Implementation
 template <class Type> class LList {
-    // Linked List Implementation
-    private:
+private:
     struct node {
         Type value;
         node *next;
@@ -26,7 +27,7 @@ template <class Type> class LList {
     node *prev_item;  // points to the node before conductor (used when adding/removing)
     int list_size;	  // number of nodes in the list, always kept up-to-date
 
-    public:
+public:
     LList() {list_size = 0;}
     ~LList() {};
 
@@ -260,7 +261,6 @@ void printStudents(LList<Student> students) {
 };
 
 void addStudent(LList<Student> *students) {
-
     Student newStudent;
 
     cout << "First Name: ";

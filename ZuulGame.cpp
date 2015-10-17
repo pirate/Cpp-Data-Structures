@@ -3,7 +3,7 @@
     MIT License
     g++ ZuulGame.cpp -o main && ./main
 
-    Interactive text-based adventure game using classes.
+    Interactive text-based adventure game with room navigation, items, and a story!
 */
 
 #include <stdlib.h>

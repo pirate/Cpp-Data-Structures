@@ -1,7 +1,9 @@
 /*  Nick Sweeting 2014/03/20
     RedBlack
     MIT License
-    g++ NickSweeting-RedBlack.cpp -o main; and ./main
+    g++ RedBlack.cpp -o main; and ./main
+
+    A Red-Black Tree implementation that can read input from a file, show sorted values, and more.
 */
 
 #include <stdlib.h>

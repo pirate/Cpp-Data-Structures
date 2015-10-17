@@ -1,6 +1,6 @@
 /*  Nick Sweeting 2013/10/09
-    Reference and Value C++ (non OOP)
-    MIT Liscense
+    References vs Values in C++
+    MIT License
 
     Takes input and removes puctuation and spaces, using two different methods.
 */

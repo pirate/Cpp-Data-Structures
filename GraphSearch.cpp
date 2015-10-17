@@ -1,7 +1,9 @@
 /*  Nick Sweeting 2014/05/08
     Graph Creator
     MIT License
-    g++ NickSweeting-GraphSearch.cpp -o ./main && ./main
+    g++ GraphSearch.cpp -o ./main && ./main
+
+    A graph and breadth-first-search implemenation that can read vertices and edges from a file and print the adjacency table.
 */
 
 #include <stdlib.h>

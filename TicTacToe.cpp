@@ -1,9 +1,9 @@
 /*  Nick Sweeting 2013/09/09
     Tic Tac Toe in C++ (non OOP)
     MIT Liscense
-    
-    save as tictactoe.cpp, then run
-    `g++ tictactoe.cpp -o tic && ./tic` to run
+    g++ TicTacToe.cpp -o main && ./main
+
+    The TicTacToe game.  Human vs (buggy) minimax-based AI.
 */
 
 #include <stdlib.h>

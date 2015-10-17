@@ -1,6 +1,9 @@
 /*  Nick Sweeting 2013/10/08
     Student List (OOP)
     MIT Lisence
+    g++ Vectors.cpp -o main && ./main
+
+    Example of using vectors to store a list of students and their GPAs.
 */
 
 #include <stdlib.h>
