@@ -117,10 +117,6 @@ public:
 
 
 int main(int argc, char **argv) {
-
-
-
-
     StudentHashTable students;
     students.print();
     students.add(458209);
