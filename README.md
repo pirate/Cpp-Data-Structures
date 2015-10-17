@@ -1,5 +1,4 @@
 # Homework Submissions for CS 163 (C++ & Data Structures)
----------------------------------------------------------
 
 ### Usage:
 
@@ -20,6 +19,7 @@ I hate doing things the standard way where each assignment is split into lots of
 freaking ridiculous if the whole assignment is <300 lines.  F the system, put it all in one nicely commented file
 and you save everybody time.
 
+---------------------------------------------------------
 These assignments were compiled and tested on a mac:  
 `Apple LLVM version 7.0.0 (clang-700.0.72)`  
 `Target: x86_64-apple-darwin15.0.0`
