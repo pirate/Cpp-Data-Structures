@@ -1,5 +1,5 @@
 # Homework Submissions for CS 163 (C++ & Data Structures)
-=========================================================
+---------------------------------------------------------
 
 ### Usage:
 
@@ -11,7 +11,7 @@ You can compile and run each assignment with the following command:
 
 ### Info:
 
-This are my homework submissions for my senior year compsci class (CS163) at Sunset High School.  
+These are my homework submissions for my senior year compsci class (CS163) at Sunset High School.  
   
 Included in the Experiments folder are some of my personal experiments into more advanced C++ techniques, such as
 runtime arbitrary assembly execution, and travelling salesman solver algorithms.
