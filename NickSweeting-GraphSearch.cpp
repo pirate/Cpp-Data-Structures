@@ -1,21 +1,20 @@
 /*  Nick Sweeting 2014/05/08
     Graph Creator
     MIT License
+    g++ NickSweeting-GraphSearch.cpp -o ./main && ./main
 */
 
 #include <stdlib.h>
 #include <time.h>       // rand seed
-#include <string>       // duh
+#include <string>
 #include <vector>       // vector of tokenized input
 #include <queue>        // breadth-first search
-#include <iostream>     // cout
+#include <iostream>
 #include <fstream>      // file()
-#include <map>          // map
+#include <map>
 using namespace std;
 
-// typedef int(5) int;
-
-const string alphabet[26] = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};    // for generating random graph vertex labels
+const string alphabet[36] = {"0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};    // for generating random graph vertex labels
 
 vector<string> tokenize(string input, string delims=",; -") {
     vector<string> tokens;
@@ -49,9 +48,8 @@ class Graph {
             // iterate through that vertex's row in adjTable
             for (listiter iter = adjTable[label].begin(); iter != adjTable[label].end(); iter++) {
                 // push any vertecies (that arent the current one) where edge = 1
-                if (*(iter->second) == 1 && iter->first != label) {
+                if (*(iter->second) == 1 && iter->first != label)
                     adj.push_back(iter->first);
-                }
             }
             //cout << label << ": "; for (int i=0; i<adj.size(); i++) cout << adj[i] << ","; cout << endl; // debug
             return adj;
@@ -76,12 +74,11 @@ class Graph {
 
     public:
         Graph(int size=0) {
-            // init a default graph with up to 26 verticies labeled A through Z
-            for (int i=0; i < size && i < 27; i++)
+            // init a default graph with up to 36 verticies labeled A through Z
+            for (int i=0; i < size && i < 37; i++)
                 addVertex(alphabet[i]);
         }
-        ~Graph() {
-        }
+        ~Graph() {}
 
         void addVertex(string label) {
             // see if it already exists
@@ -89,6 +86,7 @@ class Graph {
                 cout << endl << "\033[1;31m[X] Vertex with label '" << label << "' already exists.\033[0m" << endl;
                 return;
             }
+            if (label == "" || label == " ") return;
             // make a new row for the new vertex
             list row;
             row[label] = new int(0);
@@ -109,9 +107,8 @@ class Graph {
             // remove the vertex's row
             adjTable.erase(label);
             // remove the column from all the other rows
-            for (matrixiter iterator = adjTable.begin(); iterator != adjTable.end(); iterator++) {
+            for (matrixiter iterator = adjTable.begin(); iterator != adjTable.end(); iterator++)
                 iterator->second.erase(label);
-            }
         }
 
         void addEdge(string vertex1, string vertex2) {
@@ -156,13 +153,13 @@ class Graph {
                     // if the next vertex is the end vertex, stop searching
                     if (adj[i] == vertex2) {
                         string hopper = adj[i];
-                        cout << "\033[1;33m[√] Found path! " << vertex2;
+                        cout << endl << "\033[1;33m[√] Found path! " << vertex2;
                         // follow the breadcrumbs back to the start to get the path
                         while (tofrom[hopper] != vertex1) {
                             cout << "-" << tofrom[hopper];
                             hopper = tofrom[hopper];
                         }
-                        cout << "-" << vertex1 << "\033[0m" << endl;
+                        cout << "-" << vertex1 << "\033[0m" << endl << endl;
                         return;
                     }
                 }
@@ -276,20 +273,18 @@ int main() {
             cout << "[i] Number of verticies to generate\n(enter 0 to leave graph unchanged):";
             int verticies;
             cin >> verticies; cin.clear();
-            if (verticies < 27 && verticies > 0)
+            if (verticies < 37 && verticies > 0)
                 *graph = Graph(verticies);
-            else if (verticies > 27)
-                cout << "\033[1;31m[X] Demo graph has a max of 26 vertices (because it uses the alphabet as labels)\033[0m" << endl;
-            else
-                continue; // do not remove, bad things will happen
+            else if (verticies > 37)
+                cout << "\033[1;31m[X] Demo graph has a max of 36 vertices (because it uses the alphabet & numbers as labels)\033[0m" << endl;
 
             cout << "[i] Number of edges to randomly create\n(you need about 40 to reliably get a path from A-Z):";
             int edges;
             cin >> edges; cin.clear();
-            if (edges <= (graph->size())*(graph->size())) {
-                for (int i=0; i<edges; i++) {
-                    graph->addEdge(alphabet[rand()%(graph->size())], alphabet[rand()%(graph->size())]);
-                }
+            int verticies = graph->size();
+            if (edges <= verticies * verticies) {
+                for (int i=0; i<edges; i++)
+                    graph->addEdge(alphabet[rand() % verticies], alphabet[rand() % verticies]);
             }
             else
                 cout << "\033[1;31m[X] Too many edges to fit on this graph.\033[0m" << endl;
@@ -311,15 +306,14 @@ int main() {
             // read in verticies "A,B,C,D,E,F,G"
             int i=0;
             for (; i<65536; i++) {
-                if (block[i] == '\n')
-                    break;
+                if (block[i] == '\n') break;
                 intext += block[i];
             }
 
             // add verticies
             vector<string> tokens = tokenize(intext);
             if (tokens.empty())
-                cout << "\033[1;31m[X] No properly formatted verticies found (A,B,C,...)\033[0m" << endl;
+                cout << "\033[1;31m[X] No properly formatted verticies found (A,B,C,...) in file\033[0m" << endl;
             else {
                 for (int i=0; i<tokens.size(); i++)
                     graph->addVertex(tokens[i]);
@@ -328,15 +322,14 @@ int main() {
             // read in edges "A-B,B-C,C-D,D-F,F-E,C-G"
             intext = ""; i++;  // re-using i so that we start where we left off (skipping the newline of course)
             for (; i<65536; i++) {
-                if (block[i] == '\n')
-                    break;
+                if (block[i] == '\n') break;
                 intext += block[i];
             }
 
             // add edges
             vector<string> links = tokenize(intext, ",");
             if (links.empty())
-                cout << "\033[1;31m[X] No properly formatted edges found (A-B,A-C,C-B,...)\033[0m" << endl;
+                cout << "\033[1;31m[X] No properly formatted edges found (A-B,A-C,C-B,...) in file\033[0m" << endl;
             else {
                 for (int i=0; i<links.size(); i++) {
                     vector<string> link = tokenize(links[i], "-");
