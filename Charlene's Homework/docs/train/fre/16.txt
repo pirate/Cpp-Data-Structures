@@ -1,0 +1,108 @@
+Vampire: The Masquerade - Bloodlines (VTMB) est un jeu de rôle sur ordinateur (PC) sorti en novembre 2004 et développé par Troika Games, c'est un jeu d'action et de rôle pouvant être joué aussi bien à la première qu'à la troisième personne. Le jeu reprend l'univers et les règles du célèbre jeu de rôle de White Wolf Publishing : Vampire : la Mascarade.
+
+Bloodlines est le premier jeu avec Half-Life 2 à utiliser le moteur graphique de Valve : Source Engine. Aussi, il s'agit du troisième et dernier jeu de l'équipe de Troika Games (l'équipe responsable de Le Temple du mal élémentaire et Arcanum), commencé en octobre 2001 et fini en novembre 2004.
+Introduction[modifier | modifier le code]
+Le jeu débute avec la création d'un personnage venant d'un des sept clans de la Camarilla. Une fois que le personnage est créé, le joueur assiste aux circonstances de la transformation du personnage en un vampire. Par la suite, le joueur et le vampire responsable de la transformation sont capturés par des représentants de la Camarilla pour avoir commis cet acte sans l'autorisation du Prince. Amenés tous les deux dans une salle de théâtre, le Prince les condamne à mort, le fautif est décapité par le Shériff. Mais le personnage du joueur est sauvé par l'objection de l'audience. Grâce à cette dernière, le Prince décide d'épargner la non-vie du joueur et l'envoie à Santa Monica pour une mission.
+
+Scénario[modifier | modifier le code]
+L'histoire du jeu contient de nombreuses variables : en plus des différents pouvoirs que chaque clan offre et des nombreuses quêtes optionnelles, il y a cinq conclusions différentes à l'histoire. Le scénario parle d'un mystérieux objet archéologique appelé le sarcophage d'Ankara, qui selon les rumeurs, contiendrait le corps d'un Antédiluvien (un vampire de la 3e génération), qui serait endormi depuis de nombreux siècles. Plusieurs groupes de vampires réclament et conspirent pour posséder le sarcophage ou saboter les plans des autres. Le joueur devra décider à quel groupe accorder sa confiance ou de garder son indépendance.
+
+Les organisations[modifier | modifier le code]
+Voici les différentes organisations que le joueur rencontrera durant le jeu :
+
+Camarilla
+Il y a 60 ans, la Camarilla avait été chassé de Los Angeles par les Anarchs. Mais dernièrement, ils sont revenus en ville sous la direction du Prince Sebastien LaCroix. Leur base d'opération est située dans le centre-ville de L.A., mais la Camarilla connait des difficultés à endurcir leur pouvoir à cause de la forte opposition des Anarchs. Un membre de la Camarilla qui réclame l'appartenance du territoire d'une ville est appelé un Prince, et chef d'un clan de la Camarilla un Primogène.
+Anarchs
+C'est un groupe de vampires qui croient que l'autorité de la Camarilla n'est pas nécessaire, car les lois de la Masquarade sont simplement logiques. La majorité des Anarchs sont du clan des Brujah à cause de leur tendance à la rébellion. Un Anarch qui réclame l'appartenance d'un territoire est appelé un Baron. Les Anarchs ont contrôlé la ville de Los Angeles pendant 60 ans, jusqu'au jour où les Kuei-Jin ont attaqué la ville et ont suffisamment affaibli les Anarchs pour que Sebastian LaCroix prenne le contrôle d'une bonne partie de la ville.
+Sabbat
+Secte de vampires se croyant supérieurs à l'humanité, ses membres sont réputés pour être des personnes violentes et qui se comportent comme une meute d'enragés sanguinaires. Le groupe s’est installé à L.A. pour pouvoir prendre le contrôle de la côte ouest, car ceux-ci contrôlent déjà le Mexique. Leur chef est un Tzimisce appelé Andrei.
+Kuei-jin
+Les Kuei-jin sont des vampires originaires d'Asie. Ils se sont installés à Los Angeles pour commencer une globalisation de leur race à travers le monde. Ils sont vus comme des démons à cause de leurs grands pouvoirs. Le groupe a pour base d'opérations le quartier de Chinatown.
+La Société de Léopold
+La Société de Léopold est une organisation ultra-secrète humaine ayant pour objectifs d'éliminer les vampires. Ce sont tous des croyants catholiques fondamentalistes qui croient que la chasse aux vampires est une mission sacrée, et que les vampires sont des démons venus de l'Enfer servant Satan.
+Les Clans[modifier | modifier le code]
+Article détaillé : Vampire : la Mascarade#Les Clans.
+Au début du jeu, le joueur doit créer son personnage avec un des sept clans de vampires de la Camarilla.
+
+Brujah
+Gangrel
+Malkavian
+Nosferatu
+Toreador
+Tremere
+Ventrue
+En plus de ces clans, le joueur fera la rencontre d'autres clans :
+
+Caitiff
+Tzimisce
+Giovanni
+Gargouille
+Nagaraja
+Les personnages[modifier | modifier le code]
+Voici quelques personnages importants dont le personnage principal fera la rencontre durant son aventure :
+
+Sebastian LaCroix
+Un Ventrue français, âgé d'environ 180 ans. Durant sa vie, il était un soldat au service de Napoléon Ier. Il est aujourd'hui à la tête de la Fondation LaCroix et Prince de Los Angeles. Il réside dans la Tour Ventrue au centre-ville, et dirige les opérations de la Camarilla depuis son bureau au penthouse.
+Le Sheriff
+Le Sheriff est le garde du corps, l'assassin et l'enfonceur personnel de LaCroix. Il mesure sept pieds de haut et ne dit aucun mot durant tout le jeu. Le clan du Sheriff est indéterminé mais Gangrel ou Nagloper (lignée africaine de vampires) sont les cas les plus probables. Il possède une très grande épée qui lui sert en combat et en exécution, et a la capacité de se transformer en gigantesque chauve-souris appelé « Chiropteran Behemoth ».
+Smiling Jack
+Smiling Jack est un Brujah très célèbre dans le monde des vampires. Il est l'un des principaux vampires qui combat la Camarilla et restaurer « Anarch Free States ». Smilling Jack est celui qui enseigne au joueur la base du fonctionnement du jeu dans le tutoriel. C'est un être charismatique et vu par la communauté des vampires comme étant légendaire. Les rumeurs disent que Jack, durant sa vie, était un pirate. Selon les livres de White Wolf, Smiling Jack est âgé d'environ 400 ans.
+Beckett
+Beckett est un Gangrel très renommé dans la communauté vampirique. D'un tempérament solitaire et vagabond, il est un historien vampirique voyageant un peu partout pour désamorcer ce qu'il considère être des superstitions ridicules telles la fin du monde ou le réveil des anciens. Il est présent à Los Angeles dans ce but, persuadé que la rumeur concernant le sarcophage d'Ankara est stupide. Il est « le loup solitaire », l'une des deux seules personnes dignes de confiance dans le jeu.
+Mercurio
+Mercurio est une goule qui travaille pour LaCroix. Il a pour base d'opérations la ville de Santa Monica. Il est spécialisé dans l'achat d'armes et d'explosifs de contrebande. Un goule est un humain qui boit du sang de vampire, le sang rend le consommateur loyal au vampire par dépendance au breuvage. Dans le cas de Mercurio, c'est un mélange de sang de vampire, ce qui ne le rend pas dépendant d'un seul vampire. Un des avantages de cette consommation est que le goule ne vieillit pas, en effet, bien que Mercurio semble être jeune, celui-ci est âgé d'une soixantaine d'années. Dans l'univers de White Wolf, le goule gagne également quelques capacités surhumaines, parfois même des pouvoirs vampiriques. Il est « l'homme sur le canapé », l'une des deux seules personnes dignes de confiance dans le jeu.
+Therese et Jeanette Voerman
+Jeanette est une Malkavian, elle est aussi le personnage que l'on retrouve sur la boîte du jeu. Elle est située à Santa-Monica dans le Club Asylum, dont elle et sa sœur Therese sont les propriétaires. Therese est la baronne de Santa Monica, elle est une Malkavian, qui se comporte comme une Ventrue. Elle a l'ambition de devenir le Prince de Santa Monica et possède une haine particulière contre les Nosferatu.
+Nines Rodriguez
+Nines Rodiguez est un Brujah qui a vécu la Grande Dépression, Nines est le chef des Anarchs du centre-ville de L.A. et des alentours. L'époque de la crise économique l'a convaincu que les gens au pouvoir ne peuvent être digne de confiance et c'est pour cette raison qu'il possède une haine farouche vis-à-vis la Camarilla. Il veut que la ville de Los Angeles soit libérée de la Camarilla. Aussi, il déteste les Kuei-Jin à Chinatown, car ils ont tué le précédent chef des Anarchs qui est aussi son prédécesseur.
+Regent Maximilian Strauss
+Maximilian Strauss est le régent et le Primogene du clan des Tremeres à Los Angeles. Il vit dans la chantry du clan, un lieu où les Tremere peuvent apprendre la discipline de la Thaumaturgie. Il se méfie grandement des Anarchs et il croit que Sebastien LaCroix manque beaucoup de discrétion pour posséder le rôle de Prince.
+Brother Grunfeld Bach
+Grunfeld Bach est un catholique fondamentaliste, moine guerrier et le chef de la Société de Léopold. Il est un chasseur de vampire de la troisième génération et tient une vendetta personnelle contre Sebastian LaCroix, celui-ci ayant tué son père et son grand-père. Bach est un des mortels les plus puissants sur terre, grâce à sa foi extraordinaire il est capable d'utiliser deux pouvoirs supernaturels : générer une énergie lumineuse aveuglant quiconque se situe à sa proximité, et peut devenir invulnérable pendant une courte période. Bach et la Société de Léopold sont à Los Angeles pour tuer Sebastian LaCroix et détruire le sarcophage d'Ankara.
+Gary
+Gary est un Nosferatu et le primogen de son clan. Il vit dans les Warrens, sous le cimetière d'Hollywood. Durant sa vie, Gary Golden était une vedette populaire avec un physique séduisant. Son arrogance a attiré l'attention du clan des Nosferatu. Maintenant, il est d'une laideur repoussante comme tout le clan des Nosferatu. Il est très sarcastique et possède un goût pour le style grotesque. Gary connaît beaucoup de secrets de la ville, il est prêt à partager tous ces secrets à n'importe qui, pour un certain prix.
+Isaac Abrams
+Isaac est le Baron d'Hollywood, il dirige les opérations des Anarchs et du monde des artistes depuis sa bijouterie. Il enverra le joueur accomplir certaines missions afin de s'assurer de sa loyauté, étant soupçonneux envers les envoyés de LaCroix.
+Velvet Velour
+Toreador, elle vit à Hollywood et dirige un club de strip tease (elle refuse ce qualificatif et se présente comme une danseuse). Elle se sent très concernée par les mortels et est d'une très grande sensibilité. Elle demandera quelques services au joueur en échange de son « amour ».
+Ash Rivers
+Ancien acteur à succès, il a été transformé par Isaac pour lui sauver la vie (il faisait une overdose). Il est depuis gérant de nightclub. Il ne supporte pas sa condition de vampire et a des tendances suicidaires. Le joueur devra le sauver de l'ordre de Léopold à plusieurs reprises.
+Ming Xao
+Ming Xao est la chef des Kuei-jin de L.A.. Trois ans auparavant, elle et son groupe sont arrivés en Amérique pour prendre le contrôle de l'Ouest américain. Elle a déclaré la guerre contre les Anarchs et a tué le chef de ceux-ci. Après l'arrivée de la Camarilla, elle prit le contrôle de Chinatown pour en faire la base de ces opérations. Durant le jeu, elle complote pour prendre possession du sarcophage Ankaran pour le faire disparaître, avant que LaCroix ou un autre vampire imprudent en prenne le contrôle pour devenir un danger pour ces plans d'expansion du territoire des Kuei-jin.
+Heather Poe
+Heather Poe est une goule au service du joueur si ce dernier lui sauve la vie en lui donnant de son sang, Heather qui étant mourante à l'hôpital de Santa-Monica. Par la suite, elle habite dans le même appartement du joueur, et peut lui fournir quelques cadeaux si ce dernier prend la peine de lui rendre régulièrement visite.
+Le chauffeur de taxi
+Le chauffeur de taxi est un personnage mystérieux. En effet, quand le personnage utilise le pouvoir « Auspex » (« Augure » en V.F.), on remarque qu'il possède une aura de couleur mauve, la même que pour les êtres supernaturels (dont les vampires). De plus, si le personnage est un Malkavian, celui-ci identifie le chauffeur de taxi comme étant « Caïn ». Dans la mythologie des vampires, Caïn (fils d'Adam et d'Eve) est le premier vampire, humain maudit par une punition divine pour avoir tué son frère Abel. Il faut faire attention avec les déclarations d'un Malkavian, car nul ne sait si celui-ci dit la vérité basé sur une vision qu'il a reçu ou c'est simplement un autre passage de la folie pure dont leur clan est reconnu de posséder.
+Les lieux dans le jeu[modifier | modifier le code]
+Voici les principaux endroits que le joueur parcourra durant la partie:
+
+Santa Monica
+Santa Monica a connu des jours meilleurs. Il y a peu de vampires qui vivent dans cette ville et les forces de l'ordre sont inefficaces. C'est ici que le vampire incarné par le joueur arrive, et doit faire ses preuves. On y retrouve le club l'Asylum, la banque de sang et l'Ocean House Hôtel.
+Downtown
+Le centre-ville est le lieu où l'on retrouve la Camarilla et les Anarchs. La Ventrue Tower est la base locale de la Camarilla, et le pub The Last Round pour les Anarchs. Le secteur comprend aussi le Club Confession, l'Empire Hôtel, le Théâtre Nocturne, les Skyline Apartements, le chantry des Tremeres et quelques autres endroits intéressant comme un hôpital abandonné.
+Hollywood
+Hollywood est le territoire des Anarchs. Les vampires ont la propriété de quelques clubs comme le Asp Hole et le Club Vesuvius. Le Théâtre chinois et le cimetière sont les lieux touristiques du coin de la ville. Enfin, les Nosferatus sont établis quelque part sous les fondations.
+Chinatown
+Chinatown est le territoire des Kuei-Jin. Les vampires évitent de se promener dans cette partie de la ville. Ming Xiao habite dans le Golden Temple. En plus des Kuei-Jin, un groupe de criminel appelé les Tongs font régner la terreur auprès des honnêtes citoyens.
+Ankaran Sarcophagus[modifier | modifier le code]
+Le sarcophage d'Ankara a été découvert il y a plusieurs années par l'autorité du clergé, puis réenterré. Le sarcophage a ensuite été redécouvert par le Docteur Johansen, un archéologue norvégien. Le tombeau était dans le bateau de cargaison le Élizabeth Dane en direction d'un musée américain pour son évaluation, malheureusement il fut attaqué par une force mystérieuse et des indices démontrent que le sarcophage a été ouvert depuis l'intérieur.
+
+Les vampires de Los Angeles ont discuté sur les rumeurs que le sarcophage contiendrait un Antediluvian, un vampire de la troisième génération, un des plus vieux vampires et un signe de fin du monde dans leur religion. La très grande majorité des vampires croient que le sarcophage ne doit pas être ouvert ou même être détruit.
+
+Le vampire Beckett, un Gangrel qui cherche la raison de l'existence des vampires, pense que le sarcophage contiendrait un roi d'Assyrie. Une hypothèse confirmée par le Docteur Johansen, mais qui fait part aussi que le roi aurait vécu 250 ans. Par contre, il mentionne qu'il est possible que les rois précédents aient été effacés de l'histoire par le roi d'Assyrie ou que le nom du souverain fut le même pendant plusieurs générations.
+
+Le sarcophage est sculpté en son extérieur de plusieurs créatures buvant du sang humain. Selon le Docteur Johansen, ces sculptures symbolisent d'anciens rituels ou simplement démontrent un désordre de porphyrie dont le roi aurait pu souffrir. D'après lui, cela ne prouve nullement la présence d'un vampire à l'intérieur du sarcophage.
+
+Musique du jeu[modifier | modifier le code]
+Plusieurs chansons ont été licenciées pour le jeu. La chanson Bloodlines jouée par Ministry a été créée spécialement pour l'occasion. Voici d'autres titres pouvant être entendus dans le jeu :
+
+Titre	Composé par	Chanté par	Compagnie	Joué dans
+Swamped	Marco Coti Zelati, Cristina Scabbia et Andrea Ferro	Lacuna Coil	Century Media Records	le bar Asp Hole (Hollywood) et durant les crédits à la fin du jeu
+Cain	Johan Edlund	Tiamat	Century Media Records	le bar Asp Hole (Hollywood)
+Bloodlines	Al Jourgensen	Ministry	Sanctuary Records	le Club Confession (centre-ville)
+Needles Eye	F.G. Reiche	Die My Darling		
+Come Alive	Daniel Ash	Daniel Ash		le Club Glaze (Chinatown)
+Pound	J. Blackwell, H. Cummings, S. Smith, C. McCall et M. Wolfe	AERIAL2012		
+Isolated	Emileigh Rohn	Chiasm	COP International	le Club; The Asylum (Santa Monica)
+Lecher Bitch	Jennifer Vincent, David Vincent et Vincent Saletto	Genitorturers		au bar The Last Round (centre-ville)
+Smaller God	C. Elen, J. Thomas, et S. McManus	Darling Violetta		à l'Empire Hotel (centre-ville) et à la radio des Thin Bloods à Santa Monica Pier
