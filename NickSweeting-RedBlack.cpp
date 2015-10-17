@@ -1,6 +1,7 @@
 /*  Nick Sweeting 2014/03/20
     RedBlack
     MIT License
+    g++ NickSweeting-RedBlack.cpp -o main; and ./main
 */
 
 #include <stdlib.h>
@@ -10,7 +11,7 @@
 #include <vector>       // vector of tokenized input
 #include <queue>        // breadth-first search
 #include <sstream>      // istringstream, setw
-#include <iostream>     // cout
+#include <iostream>
 #include <fstream>      // file()
 using namespace std;
 
@@ -392,7 +393,8 @@ int main () {
     nodep tree = nilp; // oh no! where did it go?
     // ^ inits the helpful nilp so that we can use it for comparisons
     int n;  // sorcery!
-    cout << "Will generate and balance a RedBlack tree, it can handle numbers between 0 and the max (int) size on your system\n[1] add\n[2] remove\n[3] find\n[4] sorted\n[5] min\n[6] max\n---\n[7] read file\n[8] visualize\n[9] link to python script\n[0] quit\n\n";
+    cout << "Will generate and balance a RedBlack tree, it can handle numbers between 0 and " << numeric_limits<int>::max() << endl;
+    cout << "[1] add\n[2] remove\n[3] find\n[4] sorted\n[5] min\n[6] max\n---\n[7] read file\n[8] visualize\n[9] link to python script\n[0] quit\n\n";
     while (1) {
         cout << "[#]:";
         cin >> n;
