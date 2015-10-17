@@ -1,5 +1,4 @@
 /*  Nick Sweeting 2014/02/13
-    Heap
     MIT License
 */
 
