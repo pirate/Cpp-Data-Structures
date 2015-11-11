@@ -289,7 +289,7 @@ int main() {
             cout << "[i] Number of edges to randomly create\n(you need about 40 to reliably get a path from A-Z):";
             int edges;
             cin >> edges; cin.clear();
-            int verticies = graph->size();
+            verticies = graph->size();
             if (edges <= verticies * verticies) {
                 for (int i=0; i<edges; i++)
                     graph->addEdge(alphabet[rand() % verticies], alphabet[rand() % verticies]);
