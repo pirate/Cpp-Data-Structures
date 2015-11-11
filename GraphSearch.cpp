@@ -126,15 +126,20 @@ class Graph {
                 cout << endl << "\033[1;31m[X] Vertex with label '" << vertex1 << "' does not exist.\033[0m" << endl;
                 return;
             }
-            else if (adjTable.find(vertex2) == adjTable.end()) {
+            if (adjTable.find(vertex2) == adjTable.end()) {
                 cout << endl << "\033[1;31m[X] Vertex with label '" << vertex2 << "' does not exist.\033[0m" << endl;
                 return;
             }
             // if start and end are equal, no path finding is needed
-            else if (vertex1 == vertex2) {
+            if (vertex1 == vertex2) {
                 cout << "\033[1;33m[√] Found path! " << vertex2 << "-" << vertex1 << "\033[0m";
                 return;
             }
+            if (getAdjacent(vertex1).empty() || getAdjacent(vertex2).empty()) {
+                cout << "\033[1;31m[X] No path exists.\033[0m" << endl;  // start or end node is orphaned, so no path exists
+                return;
+            }
+
             // begin with vertex1, push all adjacent verticies to the queue, then repeat until a path is found
             // the path is recorded using the tofrom array, which simply records how we got to each vertex
             // to get the path, start at tofrom[end], then call tofrom[tofrom[end]] to see the one before it and so on
