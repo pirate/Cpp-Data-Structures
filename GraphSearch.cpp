@@ -152,14 +152,15 @@ class Graph {
                 root=q.front(); q.pop();
                 vector<string> adj = getAdjacent(root);
                 for (int i=0; i<adj.size(); i++) {
-                    // if the next vertex is not the same as the last one (we want to keep moving forward), push it on the queue
-                    if (adj[i] != tofrom[root]) {
-                        tofrom[adj[i]] = root;
-                        q.push(adj[i]);
+                    string next = adj[i];
+                    // if the next vertex has not already been visited, add it to the search queue
+                    if (next != tofrom[root] && tofrom.find(next) == tofrom.end()) {
+                        tofrom[next] = root;
+                        q.push(next);
                     }
                     // if the next vertex is the end vertex, stop searching
-                    if (adj[i] == vertex2) {
-                        string hopper = adj[i];
+                    if (next == vertex2) {
+                        string hopper = next;
                         cout << endl << "\033[1;33m[√] Found path! " << vertex2;
                         // follow the breadcrumbs back to the start to get the path
                         while (tofrom[hopper] != vertex1) {
