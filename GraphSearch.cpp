@@ -16,6 +16,11 @@
 #include <map>
 using namespace std;
 
+#define LABEL first      // we use a map to store vertex LABEL:VALUE, so for convenience I prefer to access them via vertex.LABEL & row.COLS instead of vertex.first and row.second
+#define VALUE second
+#define COLS second
+#define CONTAINS(obj, val) (obj.find(val) != obj.end())  // helper func because checking if the result of obj.find(val) = obj.end() is stupid and opaque
+
 const string alphabet[36] = {"0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};    // for generating random graph vertex labels
 
 vector<string> tokenize(string input, string delims=",; -") {
@@ -48,27 +53,25 @@ class Graph {
             // iterate through that vertex's row in adjTable
             for (auto& vertex: adjTable[label]) {
                 // push any vertecies (that arent the current one) where edge = 1
-                if (*(vertex.second) == 1 && vertex.first != label)   // .first is the vertex label, .second is the value
-                    adj.push_back(vertex.first);
+                if (*(vertex.VALUE) == 1 && vertex.LABEL != label)
+                    adj.push_back(vertex.LABEL);
             }
             return adj;
         }
 
         void updateEdge(string vertex1, string vertex2, int status) {
             // check to make sure both verticies exist
-            if (adjTable.find(vertex1) == adjTable.end()) {
+            if (!CONTAINS(adjTable, vertex1)) {
                 cout << endl << "\033[1;31m[X] Vertex with label '" << vertex1 << "' does not exist.\033[0m" << endl;
                 return;
             }
-            else if (adjTable.find(vertex2) == adjTable.end()) {
+            if (!CONTAINS(adjTable, vertex2)) {
                 cout << endl << "\033[1;31m[X] Vertex with label '" << vertex2 << "' does not exist.\033[0m" << endl;
                 return;
             }
-            else {
-                // keep the adjTable consistent by updating both A-B and B-A
-                *(adjTable[vertex1][vertex2]) = status;
-                *(adjTable[vertex2][vertex1]) = status;
-            }
+            // the adjTable is automatically consistent (edge is markes as both A-B and B-A)
+            *(adjTable[vertex1][vertex2]) = status;
+            // *(adjTable[vertex2][vertex1]) = status;  <- this is unecessary because both edges are pointers to the same int
         }
 
     public:
@@ -81,25 +84,29 @@ class Graph {
 
         void addVertex(string label) {
             // see if it already exists
-            if (adjTable.find(label) != adjTable.end()) {
+            if (CONTAINS(adjTable, label)) {
                 cout << endl << "\033[1;31m[X] Vertex with label '" << label << "' already exists.\033[0m" << endl;
                 return;
             }
             if (label == "" || label == " ") return;
             // make a new row for the new vertex
             list new_row;
-            new_row[label] = new int(0);
-            // seed the row with all the other vertecies
+            new_row[label] = new int(0);               // vertexes are always disconnected to themselves
+            
+            // seed the row with edges to all the other vertecies
             for (auto& row: adjTable)
-                new_row[row.first] = new int(0);
+                new_row[row.LABEL] = new int(0);       // new vertex starts disconnected to all the others
+
+            // add the new row to the adjTable
             adjTable[label] = new_row;
+
             // add a new column to all the other rows
             for (auto& row: adjTable)
-                row.second[label] = new int(0);
+                row.COLS[label] = new_row[row.LABEL];  // re-uses the pointers created above, so that both point to the same int
         }
 
         void removeVertex(string label) {
-            if (adjTable.find(label) == adjTable.end()) {
+            if (!CONTAINS(adjTable, label)) {
                 cout << endl << "\033[1;31m[X] Vertex with label '" << label << "' does not exist.\033[0m" << endl;
                 return;
             }
@@ -107,7 +114,7 @@ class Graph {
             adjTable.erase(label);
             // remove the column from all the other rows
             for (auto& row: adjTable)
-                row.second.erase(label);
+                row.COLS.erase(label);
         }
 
         void addEdge(string vertex1, string vertex2) {
@@ -118,51 +125,51 @@ class Graph {
             updateEdge(vertex1, vertex2, 0);
         }
 
-        void breadthFirst(string start_vertex, string end_vertex) {
-            if (adjTable.find(start_vertex) == adjTable.end()) {
-                cout << endl << "\033[1;31m[X] Vertex with label '" << start_vertex << "' does not exist.\033[0m" << endl;
+        void breadthFirst(string start, string end) {
+            if (!CONTAINS(adjTable, start)) {
+                cout << endl << "\033[1;31m[X] Vertex with label '" << start << "' does not exist.\033[0m" << endl;
                 return;
             }
-            if (adjTable.find(end_vertex) == adjTable.end()) {
-                cout << endl << "\033[1;31m[X] Vertex with label '" << end_vertex << "' does not exist.\033[0m" << endl;
+            if (!CONTAINS(adjTable, end)) {
+                cout << endl << "\033[1;31m[X] Vertex with label '" << end << "' does not exist.\033[0m" << endl;
                 return;
             }
             // if start and end are equal, no path finding is needed
-            if (start_vertex == end_vertex) {
-                cout << "\033[1;33m[√] Found path! " << end_vertex << "-" << start_vertex << "\033[0m";
+            if (start == end) {
+                cout << "\033[1;33m[√] Found path! " << end << "-" << start << "\033[0m";
                 return;
             }
-            if (getAdjacent(start_vertex).empty() || getAdjacent(end_vertex).empty()) {
+            if (getAdjacent(start).empty() || getAdjacent(end).empty()) {
                 cout << "\033[1;31m[X] Start or end is orphaned. No path exists.\033[0m" << endl;
                 return;
             }
 
-            // begin with start_vertex, push all adjacent verticies to the queue, then repeat until a path is found
+            // begin with start, push all adjacent verticies to the queue, then repeat until a path is found
             // the path is recorded using the tofrom array, which simply records how we got to each vertex
             // to get the path, start at tofrom[end], then call tofrom[tofrom[end]] to see the one before it and so on
             queue<string> q;
             map<string, string> tofrom;
-            tofrom[start_vertex] = start_vertex;    // set the beginning of the tofrom beadcrumb trail to something easy to check so that we dont have an infinite loop
-            q.push(start_vertex);                   // start the queue at start_vertex
+            tofrom[start] = start;    // set the beginning of the tofrom beadcrumb trail to something easy to check so that we dont have an infinite loop
+            q.push(start);                   // start the queue at start
             string root;
             while (q.size() > 0) {
                 root = q.front(); q.pop();
                 for (string& next: getAdjacent(root)) {
                     // if the next vertex has not already been visited, add it to the search queue
-                    if (tofrom.find(next) == tofrom.end()) {
+                    if (!CONTAINS(tofrom, next)) {
                         tofrom[next] = root;
                         q.push(next);
                     }
                     // if the next vertex is the end vertex, stop searching
-                    if (next == end_vertex) {
+                    if (next == end) {
                         string hopper = next;
-                        cout << endl << "\033[1;33m[√] Found path! " << end_vertex;
+                        cout << endl << "\033[1;33m[√] Found path! " << end;
                         // follow the breadcrumbs back to the start to get the path
-                        while (tofrom[hopper] != start_vertex) {
+                        while (tofrom[hopper] != start) {
                             cout << "-" << tofrom[hopper];
                             hopper = tofrom[hopper];
                         }
-                        cout << "-" << start_vertex << "\033[0m" << endl << endl;
+                        cout << "-" << start << "\033[0m" << endl << endl;
                         return;
                     }
                 }
@@ -179,16 +186,16 @@ class Graph {
             cout << endl << " ";
             // print top labels
             for (auto& row: adjTable)
-                cout << "|" << row.first;
+                cout << "|" << row.LABEL;
             cout << endl;
             // print each row
             for (auto& row: adjTable) {
-                cout << row.first << "|";
-                for (auto& col: row.second) {
-                    if (*(col.second))
-                        cout << "\033[1;31m" << *(col.second) << "\033[0m ";
+                cout << row.LABEL << "|";
+                for (auto& col: row.COLS) {
+                    if (*(col.VALUE))
+                        cout << "\033[1;31m" << *(col.VALUE) << "\033[0m ";
                     else
-                        cout << "\033[1;33m" << *(col.second) << "\033[0m ";
+                        cout << "\033[1;33m" << *(col.VALUE) << "\033[0m ";
                 }
                 cout << endl;
             }
