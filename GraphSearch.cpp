@@ -39,8 +39,6 @@ class Graph {
     private:
         typedef map<string, int*> list;             // grid row
         typedef map<string, list> matrix;           // grid columns
-        typedef list::iterator listiter;            // grid row iterator (used to iterate over a map in a for loop) iter->first is key and iter->second is value
-        typedef matrix::iterator matrixiter;        // grid column iterator (used to iterate over a map in a for loop)
 
         matrix adjTable;                            // init the adjacency table
 
@@ -48,12 +46,11 @@ class Graph {
         vector<string> getAdjacent(string label) {
             vector<string> adj;
             // iterate through that vertex's row in adjTable
-            for (listiter iter = adjTable[label].begin(); iter != adjTable[label].end(); iter++) {
+            for (auto& vertex: adjTable[label]) {
                 // push any vertecies (that arent the current one) where edge = 1
-                if (*(iter->second) == 1 && iter->first != label)
-                    adj.push_back(iter->first);
+                if (*(vertex.second) == 1 && vertex.first != label)   // .first is the vertex label, .second is the value
+                    adj.push_back(vertex.first);
             }
-            //cout << label << ": "; for (int i=0; i<adj.size(); i++) cout << adj[i] << ","; cout << endl; // debug
             return adj;
         }
 
@@ -90,15 +87,15 @@ class Graph {
             }
             if (label == "" || label == " ") return;
             // make a new row for the new vertex
-            list row;
-            row[label] = new int(0);
+            list new_row;
+            new_row[label] = new int(0);
             // seed the row with all the other vertecies
-            for (matrixiter iterator = adjTable.begin(); iterator != adjTable.end(); iterator++)
-                row[iterator->first] = new int(0);
-            adjTable[label] = row;
+            for (auto& row: adjTable)
+                new_row[row.first] = new int(0);
+            adjTable[label] = new_row;
             // add a new column to all the other rows
-            for (matrixiter iterator = adjTable.begin(); iterator != adjTable.end(); iterator++)
-                iterator->second[label] = new int(0);
+            for (auto& row: adjTable)
+                row.second[label] = new int(0);
         }
 
         void removeVertex(string label) {
@@ -109,8 +106,8 @@ class Graph {
             // remove the vertex's row
             adjTable.erase(label);
             // remove the column from all the other rows
-            for (matrixiter iterator = adjTable.begin(); iterator != adjTable.end(); iterator++)
-                iterator->second.erase(label);
+            for (auto& row: adjTable)
+                row.second.erase(label);
         }
 
         void addEdge(string vertex1, string vertex2) {
@@ -121,53 +118,51 @@ class Graph {
             updateEdge(vertex1, vertex2, 0);
         }
 
-        void breadthFirst(string vertex1, string vertex2) {
-            if (adjTable.find(vertex1) == adjTable.end()) {
-                cout << endl << "\033[1;31m[X] Vertex with label '" << vertex1 << "' does not exist.\033[0m" << endl;
+        void breadthFirst(string start_vertex, string end_vertex) {
+            if (adjTable.find(start_vertex) == adjTable.end()) {
+                cout << endl << "\033[1;31m[X] Vertex with label '" << start_vertex << "' does not exist.\033[0m" << endl;
                 return;
             }
-            if (adjTable.find(vertex2) == adjTable.end()) {
-                cout << endl << "\033[1;31m[X] Vertex with label '" << vertex2 << "' does not exist.\033[0m" << endl;
+            if (adjTable.find(end_vertex) == adjTable.end()) {
+                cout << endl << "\033[1;31m[X] Vertex with label '" << end_vertex << "' does not exist.\033[0m" << endl;
                 return;
             }
             // if start and end are equal, no path finding is needed
-            if (vertex1 == vertex2) {
-                cout << "\033[1;33m[√] Found path! " << vertex2 << "-" << vertex1 << "\033[0m";
+            if (start_vertex == end_vertex) {
+                cout << "\033[1;33m[√] Found path! " << end_vertex << "-" << start_vertex << "\033[0m";
                 return;
             }
-            if (getAdjacent(vertex1).empty() || getAdjacent(vertex2).empty()) {
-                cout << "\033[1;31m[X] No path exists.\033[0m" << endl;  // start or end node is orphaned, so no path exists
+            if (getAdjacent(start_vertex).empty() || getAdjacent(end_vertex).empty()) {
+                cout << "\033[1;31m[X] Start or end is orphaned. No path exists.\033[0m" << endl;
                 return;
             }
 
-            // begin with vertex1, push all adjacent verticies to the queue, then repeat until a path is found
+            // begin with start_vertex, push all adjacent verticies to the queue, then repeat until a path is found
             // the path is recorded using the tofrom array, which simply records how we got to each vertex
             // to get the path, start at tofrom[end], then call tofrom[tofrom[end]] to see the one before it and so on
             queue<string> q;
             map<string, string> tofrom;
-            tofrom[vertex1] = vertex1;  // set the beginning of the tofrom beadcrumb trail to something easy to check so that we dont have an infinite loop
-            q.push(vertex1);            // start the queue at vertex1
-            string root = vertex1;
+            tofrom[start_vertex] = start_vertex;    // set the beginning of the tofrom beadcrumb trail to something easy to check so that we dont have an infinite loop
+            q.push(start_vertex);                   // start the queue at start_vertex
+            string root;
             while (q.size() > 0) {
-                root=q.front(); q.pop();
-                vector<string> adj = getAdjacent(root);
-                for (int i=0; i<adj.size(); i++) {
-                    string next = adj[i];
+                root = q.front(); q.pop();
+                for (string& next: getAdjacent(root)) {
                     // if the next vertex has not already been visited, add it to the search queue
-                    if (next != tofrom[root] && tofrom.find(next) == tofrom.end()) {
+                    if (tofrom.find(next) == tofrom.end()) {
                         tofrom[next] = root;
                         q.push(next);
                     }
                     // if the next vertex is the end vertex, stop searching
-                    if (next == vertex2) {
+                    if (next == end_vertex) {
                         string hopper = next;
-                        cout << endl << "\033[1;33m[√] Found path! " << vertex2;
+                        cout << endl << "\033[1;33m[√] Found path! " << end_vertex;
                         // follow the breadcrumbs back to the start to get the path
-                        while (tofrom[hopper] != vertex1) {
+                        while (tofrom[hopper] != start_vertex) {
                             cout << "-" << tofrom[hopper];
                             hopper = tofrom[hopper];
                         }
-                        cout << "-" << vertex1 << "\033[0m" << endl << endl;
+                        cout << "-" << start_vertex << "\033[0m" << endl << endl;
                         return;
                     }
                 }
@@ -183,18 +178,17 @@ class Graph {
         void printAdjTable() {
             cout << endl << " ";
             // print top labels
-            for (matrixiter iterator = adjTable.begin(); iterator != adjTable.end(); iterator++)
-                cout << "|" << iterator->first;
+            for (auto& row: adjTable)
+                cout << "|" << row.first;
             cout << endl;
             // print each row
-            for (matrixiter iterator = adjTable.begin(); iterator != adjTable.end(); iterator++) {
-                cout << iterator->first << "|";
-                list *second = &(iterator->second);
-                for (listiter iterator2 = second->begin(); iterator2 != second->end(); iterator2++) {
-                    if (*(iterator2->second))
-                        cout << "\033[1;31m" << *(iterator2->second) << "\033[0m ";
+            for (auto& row: adjTable) {
+                cout << row.first << "|";
+                for (auto& col: row.second) {
+                    if (*(col.second))
+                        cout << "\033[1;31m" << *(col.second) << "\033[0m ";
                     else
-                        cout << "\033[1;33m" << *(iterator2->second) << "\033[0m ";
+                        cout << "\033[1;33m" << *(col.second) << "\033[0m ";
                 }
                 cout << endl;
             }
@@ -223,16 +217,16 @@ int main() {
             cin >> intext; cin.clear();
             // tokenizing input allows them to enter multiple verticies on a single line
             vector<string> tokens = tokenize(intext);
-            for (int i=0; i<tokens.size(); i++)
-                graph->addVertex(tokens[i]);
+            for (string& vertex: tokens)
+                graph->addVertex(vertex);
         }
         else if (n == 2) {
             cout << "[i] Verticies to remove\n e.g. A,C,D :";
             string intext;
             cin >> intext; cin.clear();
             vector<string> tokens = tokenize(intext);
-            for (int i=0; i<tokens.size(); i++)
-                graph->removeVertex(tokens[i]);
+            for (string& vertex: tokens)
+                graph->removeVertex(vertex);
         }
         else if (n == 3) {
             cout << "[i] Verticies to link\n e.g. A-E :";
@@ -323,8 +317,8 @@ int main() {
             if (tokens.empty())
                 cout << "\033[1;31m[X] No properly formatted verticies found (A,B,C,...) in file\033[0m" << endl;
             else {
-                for (int i=0; i<tokens.size(); i++)
-                    graph->addVertex(tokens[i]);
+                for (string& vertex: tokens)
+                    graph->addVertex(vertex);
             }
 
             // read in edges "A-B,B-C,C-D,D-F,F-E,C-G"
@@ -339,8 +333,8 @@ int main() {
             if (links.empty())
                 cout << "\033[1;31m[X] No properly formatted edges found (A-B,A-C,C-B,...) in file\033[0m" << endl;
             else {
-                for (int i=0; i<links.size(); i++) {
-                    vector<string> link = tokenize(links[i], "-");
+                for (string& link_str: tokens) {
+                    vector<string> link = tokenize(link_str, "-");
                     if (link.size() != 2)
                         cout << "\033[1;31m[X] Incomplete link found: " << link[0] << "-" << endl;
                     else
