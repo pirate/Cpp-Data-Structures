@@ -19,9 +19,13 @@ using namespace std;
 #define LABEL first      // we use a map to store vertex LABEL:VALUE, so for convenience I prefer to access them via vertex.LABEL & row.COLS instead of vertex.first and row.second
 #define VALUE second
 #define COLS second
-#define CONTAINS(obj, val) (obj.find(val) != obj.end())  // helper func because checking if the result of obj.find(val) = obj.end() is stupid and opaque
+#define CONTAINS(obj, val) (obj.find(val) != obj.end())  // helper func because c++ has no 'in' keword, e.g. `val in obj`
 
 const string alphabet[36] = {"0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};    // for generating random graph vertex labels
+
+const string RED = "\033[1;31m";
+const string YELLOW = "\033[1;33m";
+const string ENDCOLOR = "\033[0m";
 
 vector<string> tokenize(string input, string delims=",; -") {
     vector<string> tokens;
@@ -62,14 +66,14 @@ class Graph {
         void updateEdge(string vertex1, string vertex2, int status) {
             // check to make sure both verticies exist
             if (!CONTAINS(adjTable, vertex1)) {
-                cout << endl << "\033[1;31m[X] Vertex with label '" << vertex1 << "' does not exist.\033[0m" << endl;
+                cout << endl << RED << "[X] Vertex with label '" << vertex1 << "' does not exist." << ENDCOLOR << endl;
                 return;
             }
             if (!CONTAINS(adjTable, vertex2)) {
-                cout << endl << "\033[1;31m[X] Vertex with label '" << vertex2 << "' does not exist.\033[0m" << endl;
+                cout << endl << RED << "[X] Vertex with label '" << vertex2 << "' does not exist." << ENDCOLOR << endl;
                 return;
             }
-            // the adjTable is automatically consistent (edge is markes as both A-B and B-A)
+            // the adjTable is automatically consistent (A-B and B-A)
             *(adjTable[vertex1][vertex2]) = status;
             // *(adjTable[vertex2][vertex1]) = status;  <- this is unecessary because both edges are pointers to the same int
         }
@@ -83,38 +87,32 @@ class Graph {
         ~Graph() {}
 
         void addVertex(string label) {
-            // see if it already exists
             if (CONTAINS(adjTable, label)) {
-                cout << endl << "\033[1;31m[X] Vertex with label '" << label << "' already exists.\033[0m" << endl;
+                cout << endl << RED << "[X] Vertex with label '" << label << "' already exists." << ENDCOLOR << endl;
                 return;
             }
             if (label == "" || label == " ") return;
-            // make a new row for the new vertex
-            list new_row;
-            new_row[label] = new int(0);               // vertexes are always disconnected to themselves
             
-            // seed the row with edges to all the other vertecies
-            for (auto& row: adjTable)
-                new_row[row.LABEL] = new int(0);       // new vertex starts disconnected to all the others
-
-            // add the new row to the adjTable
-            adjTable[label] = new_row;
-
-            // add a new column to all the other rows
-            for (auto& row: adjTable)
-                row.COLS[label] = new_row[row.LABEL];  // re-uses the pointers created above, so that both point to the same int
+            list new_adj_row;
+            new_adj_row[label] = new int(0);                    // vertexes are always disconnected to themselves
+           
+            for (auto& vertex: adjTable)                        // seed the new adjacency table row with edges to all the other vertecies
+                new_adj_row[vertex.LABEL] = new int(0);         // new vertex starts disconnected to all the others
+            
+            adjTable[label] = new_adj_row;                      // add the new row to the adjTable
+            
+            for (auto& row: adjTable)                           // add a new column to all the other rows
+                row.COLS[label] = new_adj_row[row.LABEL];       // re-use the pointers created above, so that both point to the same int
         }
 
-        void removeVertex(string label) {
-            if (!CONTAINS(adjTable, label)) {
-                cout << endl << "\033[1;31m[X] Vertex with label '" << label << "' does not exist.\033[0m" << endl;
+        void removeVertex(string vertex) {
+            if (!CONTAINS(adjTable, vertex)) {
+                cout << endl << RED << "[X] Vertex with label '" << vertex << "' does not exist." << ENDCOLOR << endl;
                 return;
             }
-            // remove the vertex's row
-            adjTable.erase(label);
-            // remove the column from all the other rows
-            for (auto& row: adjTable)
-                row.COLS.erase(label);
+            adjTable.erase(vertex);                             // remove the vertex's row
+            for (auto& row: adjTable)                           // remove the column from all the other rows
+                row.COLS.erase(vertex);
         }
 
         void addEdge(string vertex1, string vertex2) {
@@ -127,30 +125,29 @@ class Graph {
 
         void breadthFirst(string start, string end) {
             if (!CONTAINS(adjTable, start)) {
-                cout << endl << "\033[1;31m[X] Vertex with label '" << start << "' does not exist.\033[0m" << endl;
+                cout << endl << RED << "[X] Vertex with label '" << start << "' does not exist." << ENDCOLOR << endl;
                 return;
             }
             if (!CONTAINS(adjTable, end)) {
-                cout << endl << "\033[1;31m[X] Vertex with label '" << end << "' does not exist.\033[0m" << endl;
+                cout << endl << RED << "[X] Vertex with label '" << end << "' does not exist." << ENDCOLOR << endl;
                 return;
             }
-            // if start and end are equal, no path finding is needed
             if (start == end) {
-                cout << "\033[1;33m[√] Found path! " << end << "-" << start << "\033[0m";
+                cout << YELLOW << "[√] Start and End are the same vertex! " << end << "-" << start << "" << ENDCOLOR << endl;
                 return;
             }
             if (getAdjacent(start).empty() || getAdjacent(end).empty()) {
-                cout << "\033[1;31m[X] Start or end is orphaned. No path exists.\033[0m" << endl;
+                cout << RED << "[X] Start or End is orphaned. No path exists." << ENDCOLOR << endl;
                 return;
             }
 
-            // begin with start, push all adjacent verticies to the queue, then repeat until a path is found
+            // begin with start, push all adjacent verticies to the queue, pop top of queue and repeat until end is found
             // the path is recorded using the tofrom array, which simply records how we got to each vertex
             // to get the path, start at tofrom[end], then call tofrom[tofrom[end]] to see the one before it and so on
             queue<string> q;
             map<string, string> tofrom;
-            tofrom[start] = start;    // set the beginning of the tofrom beadcrumb trail to something easy to check so that we dont have an infinite loop
-            q.push(start);                   // start the queue at start
+            tofrom[start] = start;          // set the beginning of the tofrom beadcrumb trail to the start vertex
+            q.push(start);
             string root;
             while (q.size() > 0) {
                 root = q.front(); q.pop();
@@ -162,19 +159,19 @@ class Graph {
                     }
                     // if the next vertex is the end vertex, stop searching
                     if (next == end) {
-                        string hopper = next;
-                        cout << endl << "\033[1;33m[√] Found path! " << end;
+                        cout << endl << YELLOW << "[√] Found path! " << end;
                         // follow the breadcrumbs back to the start to get the path
-                        while (tofrom[hopper] != start) {
-                            cout << "-" << tofrom[hopper];
-                            hopper = tofrom[hopper];
+                        string last = end;
+                        while (tofrom[last] != start) {
+                            last = tofrom[last];
+                            cout << "-" << last;
                         }
-                        cout << "-" << start << "\033[0m" << endl << endl;
+                        cout << "-" << start << ENDCOLOR << endl << endl;
                         return;
                     }
                 }
             }
-            cout << "\033[1;31m[X] Path not found.\033[0m" << endl;
+            cout << RED << "[X] Path not found." << ENDCOLOR << endl;
         }
 
         void dijkstra(string vertex1, string vertex2) {
@@ -191,12 +188,8 @@ class Graph {
             // print each row
             for (auto& row: adjTable) {
                 cout << row.LABEL << "|";
-                for (auto& col: row.COLS) {
-                    if (*(col.VALUE))
-                        cout << "\033[1;31m" << *(col.VALUE) << "\033[0m ";
-                    else
-                        cout << "\033[1;33m" << *(col.VALUE) << "\033[0m ";
-                }
+                for (auto& col: row.COLS)
+                    cout << (*(col.VALUE) ? RED : YELLOW) << *(col.VALUE) << " " << ENDCOLOR;
                 cout << endl;
             }
             cout << endl;
@@ -208,10 +201,7 @@ class Graph {
 };
 
 int main() {
-    // init random number seed from time
-    srand(time(NULL));
-    // init graph
-    Graph *graph = new Graph();
+    auto* graph = new Graph();
     cout << "Will generate and map a graph. Points can be labeled and referenced using strings.\n[1] add verticies\n[2] remove verticies\n[3] add edges\n[4] remove edges\n[5] breadth-first shortest path\n[6] dijkstra's shortest path\n---\n[7] generate demo graph\n[8] read graph from file\n[0] quit\n\n";
     int n;
     while (1) {
@@ -243,7 +233,7 @@ int main() {
             if (tokens.size() == 2)
                 graph->addEdge(tokens[0], tokens[1]);
             else
-                cout << "\033[1;31m[X] Only two verticies can be linked.\033[0m" << endl;
+                cout << RED << "[X] Only two verticies can be linked." << ENDCOLOR << endl;
         }
         else if (n == 4) {
             cout << "[i] Verticies to unlink\n e.g A-B :";
@@ -253,7 +243,7 @@ int main() {
             if (tokens.size() == 2)
                 graph->removeEdge(tokens[0], tokens[1]);
             else
-                cout << "\033[1;31m[X] Only two verticies can be unlinked.\033[0m" << endl;
+                cout << RED << "[X] Only two verticies can be unlinked." << ENDCOLOR << endl;
         }
         else if (n == 5) {
             // breadth first path finding search
@@ -264,7 +254,7 @@ int main() {
             if (tokens.size() == 2)
                 graph->breadthFirst(tokens[0], tokens[1]);
             else
-                cout << "\033[1;31m[X] You can only find the path between two verticies.\033[0m" << endl;
+                cout << RED << "[X] You can only find the path between two verticies." << ENDCOLOR << endl;
         }
         else if (n == 6) {
             // fake dijkstra's seach (it just uses breadth-first)
@@ -275,7 +265,7 @@ int main() {
             if (tokens.size() == 2)
                 graph->dijkstra(tokens[0], tokens[1]);
             else
-                cout << "\033[1;31m[X] You can only find the path between two verticies.\033[0m" << endl;
+                cout << RED << "[X] You can only find the path between two verticies." << ENDCOLOR << endl;
         }
         else if (n == 7) {
             // generate a random demo board
@@ -285,18 +275,19 @@ int main() {
             if (verticies < 37 && verticies > 0)
                 *graph = Graph(verticies);
             else if (verticies > 37)
-                cout << "\033[1;31m[X] Demo graph has a max of 36 vertices (because it uses the alphabet & numbers as labels)\033[0m" << endl;
+                cout << RED << "[X] Demo graph has a max of 36 vertices (because it uses the alphabet & numbers as labels)" << ENDCOLOR << endl;
 
             cout << "[i] Number of edges to randomly create\n(you need about 40 to reliably get a path from A-Z):";
             int edges;
             cin >> edges; cin.clear();
             verticies = graph->size();
+            srand(time(NULL));      // init random number seed from time
             if (edges <= verticies * verticies) {
                 for (int i=0; i<edges; i++)
                     graph->addEdge(alphabet[rand() % verticies], alphabet[rand() % verticies]);
             }
             else
-                cout << "\033[1;31m[X] Too many edges to fit on this graph.\033[0m" << endl;
+                cout << RED << "[X] Too many edges to fit on this graph." << ENDCOLOR << endl;
         }
         else if (n == 8) {
             // load board from a file
@@ -322,7 +313,7 @@ int main() {
             // add verticies
             vector<string> tokens = tokenize(intext);
             if (tokens.empty())
-                cout << "\033[1;31m[X] No properly formatted verticies found (A,B,C,...) in file\033[0m" << endl;
+                cout << RED << "[X] No properly formatted verticies found (A,B,C,...) in file" << ENDCOLOR << endl;
             else {
                 for (string& vertex: tokens)
                     graph->addVertex(vertex);
@@ -338,12 +329,12 @@ int main() {
             // add edges
             vector<string> links = tokenize(intext, ",");
             if (links.empty())
-                cout << "\033[1;31m[X] No properly formatted edges found (A-B,A-C,C-B,...) in file\033[0m" << endl;
+                cout << RED << "[X] No properly formatted edges found (A-B,A-C,C-B,...) in file" << ENDCOLOR << endl;
             else {
                 for (string& link_str: tokens) {
                     vector<string> link = tokenize(link_str, "-");
                     if (link.size() != 2)
-                        cout << "\033[1;31m[X] Incomplete link found: " << link[0] << "-" << endl;
+                        cout << RED << "[X] Incomplete link found: " << link[0] << "-" << endl;
                     else
                         graph->addEdge(link[0], link[1]);
                 }
@@ -351,9 +342,7 @@ int main() {
 
             delete[] block;
         }
-        else if (n == 0)
-            break; // quit
-        else
-            cout << "\033[1;31m[X] Enter the number of the command you're trying to run.\033[0m" << endl;
+        else if (n == 0) return 0;
+        else cout << RED << "[X] Enter the number of the command you're trying to run." << ENDCOLOR << endl;
     }
 }
