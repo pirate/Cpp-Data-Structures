@@ -24,6 +24,6 @@ These assignments were compiled and tested using:
 `Apple LLVM version 7.0.0 (clang-700.0.72)`  
 `Target: x86_64-apple-darwin15.0.0`
 
-If you choose to copy this code to cheat on your homework, do so at your own peril, and don't be a dumbass and forget to change the variable & function names :).
+Please don't copy this code to cheat on your homework without at least reading it, and interpreting the logic to be your own.  It's hard to refactor a program without understanding how it works, and you will gain a lot by spending the extra 10 minutes to understand it.
 
 MIT License - Nick Sweeting - 2015
