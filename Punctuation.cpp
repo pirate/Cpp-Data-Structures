@@ -12,8 +12,9 @@
 
 using namespace std;
 
+const char punct[26] = " .!-_?<>,*&^$!;:'()[]{}|`";
+
 bool ispunct(char q) {
-    char punct[26] = ".!-_? <>,*&^$!;:'()[]{}|`";
     for (int p=0;p<25;p++) {
         if (q == punct[p]) return true;
     }
