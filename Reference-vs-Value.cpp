@@ -31,7 +31,7 @@ char* modifyAndCopy(char *raw_input) {
     return newarray;
 }
 
-char* modifyInPlace(char *raw_input){
+char* modifyInPlace(char *raw_input) {
     // input cleanup
     int q, position = 0;
     for (q=0;q<80;q++) {
