@@ -49,21 +49,22 @@ int check_for_winner(square board[9]) {         // returns int winner X=0, O=1, 
                            {2, 4, 6}};
 
     // check for win by a player
-    int index1;
-    int index2;
-    int index3;
+    int index1, index2, index3;
     for (int i=0; i<8; i++){
         index1 = solutions[i][0];
         index2 = solutions[i][1];
         index3 = solutions[i][2];
-        if (board[index1] == board[index2] && board[index2] == board[index3] && board[index1] != EMPTY) {
-            if (board[index1] == X) return 0;
-            else if (board[index1] == O) return 1;
+        if (board[index1] == board[index2] &&
+            board[index2] == board[index3] &&
+            board[index1] != EMPTY) {
+            return board[index1] == X ? 0 : 1;
         }
     }
 
     // check for a tie
-    for (int b=0; b<9; b++) if (board[b] == EMPTY) return -1;               // return -1 if any squares are empty (game unfinished)
+    for (int b=0; b<9; b++)
+        if (board[b] == EMPTY)
+            return -1;  // return -1 if any squares are empty (game unfinished)
 
     // if no winner is found, and squares are not empty, return tie
     return 2;
@@ -88,25 +89,25 @@ int human_move(square board[9], square human_symbol) {                  // retur
         cin >> input_square;
         cin.clear();                                                    // will cause infinite loop unless input buffer is cleared between inputs
 
-        if (input_square == 0 && allow_skip) {
+        if (input_square == 0 && allow_skip)
             return 0;
-        }
 
         if (input_square < 1 || input_square > 9) {
             cout << "\nYou idiot, type numbers between 1-9 only.\n";
             input_square = -1;
         }
-        else move = input_square-1;
+        else
+            move = input_square-1;
     }
 
     int final_move = -1;
     final_move = place_move(board, move, human_symbol);
     if (final_move == -1) {
         cout << "\nPlacing an " << string(1, human_symbol) << " at " << move+1 << " is invalid.\n";       // if spot is taken
-        
         return human_move(board, human_symbol);
     }
-    else return final_move;
+    else
+        return final_move;
 }
 
 /* AI Functions:
@@ -117,30 +118,24 @@ int human_move(square board[9], square human_symbol) {                  // retur
 // dumb AI for gameplay demonstration and debugging when minimax_ai is broken
 int fallback_ai(square board[9]) {
     int sorted_board[9] = {4,0,2,6,8,1,3,5,7};                     // play center, then corners, then everything else
-    for (int i=0;i<9;i++) {
-        if (board[sorted_board[i]] == EMPTY) {
+    for (int i=0;i<9;i++)
+        if (board[sorted_board[i]] == EMPTY)
             return sorted_board[i];
-        }
-    }
+    return 4;
 }
 
 // returns +1, 0, or -1 for scoring of the move to determine whether it helps the computer, human, or neither
 int judge_move(int winner, square current_player, square computer_symbol) {
-    int player;
     if (winner == 2) return 0;      // handle ties straight off the bat
 
-    if (current_player == X) player = 0;            // convert player symbol to int for easier processing X=0, O=1
-    else if (current_player == O) player = 1;
+    // convert player symbol to int for easier processing X=0, O=1
+    int player = current_player == X ? 0 : 1;
+    int score = winner == player ? 1 : -1;
 
-    int score;
-    if (winner == player) score = 1;
-    else if (winner != player) score = -1;
     // flip score if computer is not player who placed move
-    if (computer_symbol != current_player) {
-        if (score == 1) return -1;
-        else if (score == -1) return 1;
-    }
-    else return score;
+    if (computer_symbol != current_player)
+        score = 0 - score;
+    return score;
 }
 
 // calculates which moves are viable by seeing which squares are EMPTY, returns array of bools viable_squares[]
@@ -148,11 +143,9 @@ bool* calc_viable(square board[9]) {
     bool *viable_squares;
     viable_squares = new bool [9];
 
-    int a = 0;
-    for (int i=0;i<9;i++) {
-        if (board[i] == EMPTY) viable_squares[i] = true;
-        else viable_squares[i] = false;
-    }
+    for (int i=0;i<9;i++)
+        viable_squares[i] = board[i] == EMPTY;
+
     return viable_squares;
 }
 
@@ -167,10 +160,10 @@ void minimax_recursor(square *tmp_board, int score[9], square current_player, sq
                 //cout << "Begin recurse for " << m+1 << endl;
 
                 // flip flop the players
-                if (current_player == X) current_player = O; else current_player = X;
+                current_player = current_player == X ? O : X;
                 minimax_recursor(tmp_board, score, current_player, computer_symbol);
                 tmp_board[m] = EMPTY;      // undo move so simulation can continue
-                if (current_player == X) current_player = O; else current_player = X;
+                current_player = current_player == X ? O : X;
             }
             else {
                 //cout << "Score[" << m+1 << "] += " << judge_move(winner, current_player, computer_symbol) << endl;
@@ -181,7 +174,7 @@ void minimax_recursor(square *tmp_board, int score[9], square current_player, sq
                     score[m] += square_score;
                 }
                 else if (score[m] <= 0 && square_score < 0) {
-                    score[m] <= square_score;
+                    score[m] -= square_score;
                 }
                 tmp_board[m] = EMPTY;      // undo move so simulation can continue
             }
@@ -237,10 +230,12 @@ int main () {
 
     square human_symbol, computer_symbol;
     if (tmp_human_symbol == 'x' || tmp_human_symbol == 'X') {
-        human_symbol = X; computer_symbol = O;
+        human_symbol = X;
+        computer_symbol = O;
     }
     else {
-        human_symbol = O; computer_symbol = X;
+        human_symbol = O;
+        computer_symbol = X;
     }
 
     print_help();
@@ -258,7 +253,7 @@ int main () {
 
     // Endgame Text
     cout << endl;
-    print_board(board, -1, -1);                                                 // print ending state of the board with no recent moves highlighted
+    print_board(board, -1, -1);                                                     // print ending state of the board with no recent moves highlighted
     string winner;
     int end_result = check_for_winner(board);                                       // its a tad innefficient to keep calling this every time, who cares, its only an extra 15ms
     if (human_symbol == X && end_result == 0) winner = "You won. (X)";
