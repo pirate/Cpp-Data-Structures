@@ -32,27 +32,27 @@ class Item {
 };
 
 class BoardState {
-public:
+    public:
 
-    class Room {
-        public:
-            Room(string in_name) {
-                name = in_name;
-                isRoom = true;
-            }
+        class Room {
+            public:
+                Room(string in_name) {
+                    name = in_name;
+                    isRoom = true;
+                }
 
-            ~Room() {};
+                ~Room() {};
 
-            void SetAttr(string inname, string indetails, bool inisRoom) {
-                name = inname;
-                details = indetails;
-                isRoom = inisRoom;
-            }
+                void SetAttr(string inname, string indetails, bool inisRoom) {
+                    name = inname;
+                    details = indetails;
+                    isRoom = inisRoom;
+                }
 
-            string name;
-            string details;
-            bool isRoom;
-            vector<Item> Items;
+                string name;
+                string details;
+                bool isRoom;
+                vector<Item> Items;
         };
 
         int current_room;
@@ -63,100 +63,100 @@ public:
 
         void AddRoom(Room o) {
             Rooms.push_back(o);
-    }
+        }
 
-    class Character {
-    public:
-        int curr_pos;
-        string name;
-        vector<Item> Backpack;
+        class Character {
+            public:
+                int curr_pos;
+                string name;
+                vector<Item> Backpack;
 
-        Character() {
-            curr_pos=0;
+                Character() {
+                    curr_pos=0;
+                };
+
+                ~Character() {};
         };
 
-        ~Character() {};
-    };
+        Character Player;
 
-    Character Player;
+        BoardState(int in_size, int in_y_size, int in_x_size) {
+            size = in_size; y_size = in_y_size; x_size = in_x_size;
 
-    BoardState(int in_size, int in_y_size, int in_x_size) {
-        size = in_size; y_size = in_y_size; x_size = in_x_size;
+            Player = Character();
 
-        Player = Character();
+            for (int q=0; q<size; q++) {
+                AddRoom(Room("Room"));
+            }
+        };
 
-        for (int q=0; q<size; q++) {
-            AddRoom(Room("Room"));
+        ~BoardState() {};
+
+        int* RoomPos(int position) {
+            int *pos = new int[2];
+            pos[0] = position/(y_size-1);                 // y
+            pos[1] = position-(pos[0]*x_size);        // x
+            return pos;
         }
-    };
 
-    ~BoardState() {};
+        int RoomIndex(int y_pos, int x_pos) {
+            if (x_pos > x_size-1 || x_pos < 0) return -1;
+            if (y_pos > y_size-1 || y_pos < 0) return -1;
 
-    int* RoomPos(int position) {
-        int *pos = new int[2];
-        pos[0] = position/(y_size-1);                 // y
-        pos[1] = position-(pos[0]*x_size);        // x
-        return pos;
-    }
-
-    int RoomIndex(int y_pos, int x_pos) {
-        if (x_pos > x_size-1 || x_pos < 0) return -1;
-        if (y_pos > y_size-1 || y_pos < 0) return -1;
-
-        return (y_pos*x_size)+x_pos;
-    }
-
-    bool IsRoom(int position) {
-        if (position >= 0 && position < size) {
-            return Rooms[position].isRoom;
+            return (y_pos*x_size)+x_pos;
         }
-        else return false;
-    }
 
-    int* RoomDoors(int position) {
-        int y_pos = RoomPos(position)[0];
-        int x_pos = RoomPos(position)[1];
+        bool IsRoom(int position) {
+            if (position >= 0 && position < size) {
+                return Rooms[position].isRoom;
+            }
+            else return false;
+        }
 
-        int *doors = new int[4];
-        doors[0] = RoomIndex(y_pos-1, x_pos); // n
-        doors[1] = RoomIndex(y_pos, x_pos+1); // e
-        doors[2] = RoomIndex(y_pos+1, x_pos); // s
-        doors[3] = RoomIndex(y_pos, x_pos-1); // w
+        int* RoomDoors(int position) {
+            int y_pos = RoomPos(position)[0];
+            int x_pos = RoomPos(position)[1];
 
-        for (int l=0;l<4;l++) if (!IsRoom(doors[l])) doors[l] = -1;
-        return doors;
-    }
+            int *doors = new int[4];
+            doors[0] = RoomIndex(y_pos-1, x_pos); // n
+            doors[1] = RoomIndex(y_pos, x_pos+1); // e
+            doors[2] = RoomIndex(y_pos+1, x_pos); // s
+            doors[3] = RoomIndex(y_pos, x_pos-1); // w
 
-    void PickItem(BoardState &Game, int pos, string item_to_take) {
-        for (int l=0; l<Rooms[pos].Items.size(); l++) {
-            Item item = Rooms[pos].Items[l];
-            if (item.name == item_to_take) {
-                Game.Player.Backpack.push_back(item);
-                Rooms[pos].Items.erase(Rooms[pos].Items.begin() + l);
+            for (int l=0;l<4;l++) if (!IsRoom(doors[l])) doors[l] = -1;
+            return doors;
+        }
+
+        void PickItem(BoardState &Game, int pos, string item_to_take) {
+            for (int l=0; l<Rooms[pos].Items.size(); l++) {
+                Item item = Rooms[pos].Items[l];
+                if (item.name == item_to_take) {
+                    Game.Player.Backpack.push_back(item);
+                    Rooms[pos].Items.erase(Rooms[pos].Items.begin() + l);
+                }
             }
         }
-    }
 
-    void DropItem(BoardState &Game, int pos, string item_to_drop) {
-        for (int l=0; l<Game.Player.Backpack.size(); l++) {
-            Item item = Game.Player.Backpack[l];
-            if (item.name == item_to_drop) {
-                Rooms[pos].Items.push_back(item);
-                Game.Player.Backpack.erase(Game.Player.Backpack.begin() + l);
+        void DropItem(BoardState &Game, int pos, string item_to_drop) {
+            for (int l=0; l<Game.Player.Backpack.size(); l++) {
+                Item item = Game.Player.Backpack[l];
+                if (item.name == item_to_drop) {
+                    Rooms[pos].Items.push_back(item);
+                    Game.Player.Backpack.erase(Game.Player.Backpack.begin() + l);
+                }
             }
         }
-    }
 
-    void PrintBoard() {
-        for (int y=0; y<y_size; y++) {
-            cout << "| ";
-            for (int x=0; x<x_size; x++) {
-                if (Player.curr_pos == RoomIndex(y,x)) cout << "@"; else cout << " ";
-                cout << setw(14) << Rooms[RoomIndex(y,x)].name << setw(11) << " | ";
+        void PrintBoard() {
+            for (int y=0; y<y_size; y++) {
+                cout << "| ";
+                for (int x=0; x<x_size; x++) {
+                    if (Player.curr_pos == RoomIndex(y,x)) cout << "@"; else cout << " ";
+                    cout << setw(14) << Rooms[RoomIndex(y,x)].name << setw(11) << " | ";
+                }
+                cout << endl;
             }
-            cout << endl;
         }
-    }
 };
 
 
@@ -283,6 +283,7 @@ int main () {
         int curr_pos = Game.Player.curr_pos;
         BoardState::Room curr_room = Game.Rooms[curr_pos];
 
+        // Print current gamestate
         cout << endl << "Current Room: " << curr_room.name << " [" << Game.RoomPos(curr_pos)[0] << "," << Game.RoomPos(curr_pos)[1] << "]" << endl;
         cout << "Exits: ";
         int *doors = Game.RoomDoors(curr_pos);
@@ -299,10 +300,10 @@ int main () {
         cout << endl << "Backpack: ";
         for (int m=0; m<Game.Player.Backpack.size(); m++) cout << Game.Player.Backpack[m].name << ", ";
 
+        // Get player's next action from input
         string in;
         cout << endl << "-> ";
         cin >> in;
-
         if (in == "p") {
             cout << endl << "To Pick up an item from the room, type it's name: ";
             string item_to_take;
@@ -325,6 +326,7 @@ int main () {
         else if (in == "q") return 0;
         cout << endl;
 
+        // Check for game ending conditions
         if (check_win(Game, house_pos)) {
             cout << "Congrats! You're collected enough for a candlelight dinner for two." << endl;
             cout << "Your meal consists of: " << make_meal(Game, house_pos) << endl;
