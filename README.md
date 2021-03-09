@@ -16,7 +16,7 @@ Included in the Experiments folder are some of my personal experiments into more
 runtime arbitrary assembly execution, and travelling salesman solver algorithms.
 
 I hate doing things the standard way where each assignment is split into lots of tiny header and source files, doing that is
-freaking ridiculous if the whole assignment is <300 lines.  F the system, put it all in one nicely commented file
+freaking ridiculous if the whole assignment is <300 lines.  F the system, forget separate header files, put it all in one nicely commented file
 and you save everybody time.
 
 ---------------------------------------------------------
